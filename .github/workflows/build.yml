@@ -1,0 +1,27 @@
+name: Build
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:            
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-12, ubuntu-22.04, windows-2022]
+            
+    runs-on: ${{ matrix.platform }}        
+    steps:
+      - uses: actions/checkout@v3
+      - name: 'Setup Rust' 
+        uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+      - name: Build binaries
+        run: cargo build --verbose --release
+
