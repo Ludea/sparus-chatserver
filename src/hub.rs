@@ -295,8 +295,6 @@ mod tests {
                 } else {
                     panic!("Expected Output::Posted got {:?}", output);
                 }
-
-                return;
             };
             tokio::select! {
               _ = hub.run(receiver) => {},
